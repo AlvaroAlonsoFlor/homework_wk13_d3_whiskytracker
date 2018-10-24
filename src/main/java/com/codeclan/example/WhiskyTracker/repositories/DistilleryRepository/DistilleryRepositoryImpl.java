@@ -1,6 +1,7 @@
 package com.codeclan.example.WhiskyTracker.repositories.DistilleryRepository;
 
 import com.codeclan.example.WhiskyTracker.models.Distillery;
+import com.codeclan.example.WhiskyTracker.models.Whisky;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -22,7 +23,7 @@ public class DistilleryRepositoryImpl implements DistilleryRepositoryCustom {
         List<Distillery> result = null;
         Session session = entityManager.unwrap(Session.class);
 
-        try{
+        try {
             Criteria cr = session.createCriteria(Distillery.class);
             cr.add(Restrictions.eq("region", region));
             result = cr.list();
@@ -36,5 +37,46 @@ public class DistilleryRepositoryImpl implements DistilleryRepositoryCustom {
 
     }
 
+    @Transactional
+    public List<Whisky> getWhiskyFromDistilleryWithAge(Long distilleryId, int age) {
+        List<Whisky> result = null;
+        Session session = entityManager.unwrap(Session.class);
 
-}
+        try {
+            Criteria cr = session.createCriteria(Whisky.class);
+            cr.add(Restrictions.eq("distillery.id", distilleryId));
+            cr.add(Restrictions.eq("age", age));
+
+            result = cr.list();
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return result;
+
+    }
+
+    @Transactional
+    public List<Distillery> getDistilleriesWithWhiskyThisOld(int age) {
+        List<Distillery> result = null;
+        Session session = entityManager.unwrap(Session.class);
+
+        try {
+            Criteria cr = session.createCriteria(Distillery.class);
+            cr.createAlias("whiskies", "whisky");
+            cr.add(Restrictions.eq("whisky.age", age));
+            result = cr.list();
+        } catch(HibernateException ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return result;
+    }
+
+
+    }
+

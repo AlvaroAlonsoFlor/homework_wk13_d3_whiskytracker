@@ -1,6 +1,7 @@
 package com.codeclan.example.WhiskyTracker.controllers;
 
 import com.codeclan.example.WhiskyTracker.models.Distillery;
+import com.codeclan.example.WhiskyTracker.models.Whisky;
 import com.codeclan.example.WhiskyTracker.repositories.DistilleryRepository.DistilleryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,16 @@ public class DistilleryController {
     @GetMapping(value = "{region}")
     public List<Distillery> getDistilleriesFromRegion(@PathVariable String region) {
         return distilleryRepository.getAllDistilleriesInRegion(region);
+    }
+
+    @GetMapping( value = "{distilleryId}/{age}")
+    public List<Whisky> getWhiskiesInDistilleryWithAge(@PathVariable Long distilleryId, @PathVariable int age) {
+        return distilleryRepository.getWhiskyFromDistilleryWithAge(distilleryId, age);
+    }
+
+    @GetMapping( value = "thisold/{age}")
+    public List<Distillery> getDistilleriesWithWhiskyThisOld(@PathVariable int age) {
+        return distilleryRepository.getDistilleriesWithWhiskyThisOld(age);
     }
 
 

@@ -38,16 +38,16 @@ public class WhiskyRepositoryImpl implements WhiskyRepositoryCustom {
         return result;
     }
 
-    // Not working
+    // Returning same whisky twice when Highland
     @Transactional
     public List<Whisky> allWhiskyInRegion(String region) {
         List<Whisky> result = null;
         Session session = entityManager.unwrap(Session.class);
 
         try{
-            Criteria cr = session.createCriteria(Whisky.class);
-//            cr.createAlias("distillery", "selected");
-            cr.add(Restrictions.eq("distillery.region",region));
+            Criteria cr = session.createCriteria(Distillery.class);
+            cr.createAlias("whiskies", "whisky");
+            cr.add(Restrictions.eq("region",region));
             result = cr.list();
         } catch (HibernateException ex) {
             ex.printStackTrace();
