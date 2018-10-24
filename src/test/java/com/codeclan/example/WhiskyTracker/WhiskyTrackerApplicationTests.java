@@ -30,4 +30,9 @@ public class WhiskyTrackerApplicationTests {
 		List<Whisky> result = whiskyRepository.allWhiskiesInYear(1991);
 	}
 
+    @Test
+    public void canGetWhiskiesFromRegion() {
+        List<Whisky> result = whiskyRepository.allWhiskyInRegion("Highland");
+    }
+
 }

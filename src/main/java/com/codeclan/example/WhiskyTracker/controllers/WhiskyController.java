@@ -3,10 +3,7 @@ package com.codeclan.example.WhiskyTracker.controllers;
 import com.codeclan.example.WhiskyTracker.models.Whisky;
 import com.codeclan.example.WhiskyTracker.repositories.WhiskyRepository.WhiskyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +17,11 @@ public class WhiskyController {
     @GetMapping(value = "{year}")
     public List<Whisky> getWhiskiesInYear(@PathVariable int year) {
         return whiskyRepository.allWhiskiesInYear(year);
+    }
+
+    @GetMapping(value = "region/{region}")
+    public List<Whisky> getWhiskiesInRegion(@PathVariable String region) {
+        return whiskyRepository.allWhiskyInRegion(region);
     }
 
 
