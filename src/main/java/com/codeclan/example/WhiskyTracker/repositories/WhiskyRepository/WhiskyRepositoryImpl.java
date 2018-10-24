@@ -14,8 +14,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public class WhiskyRepositoryImpl implements WhiskyRepositoryCustom {
-    //TODO: all the whisky in a region
-    //TODO: all the whisky from a particular distillery that is a specific age
 
     @Autowired
     EntityManager entityManager;
@@ -47,7 +45,7 @@ public class WhiskyRepositoryImpl implements WhiskyRepositoryCustom {
         try{
             Criteria cr = session.createCriteria(Distillery.class);
             cr.createAlias("whiskies", "whisky");
-            cr.add(Restrictions.eq("region",region));
+            cr.add(Restrictions.eq("region", region));
             result = cr.list();
         } catch (HibernateException ex) {
             ex.printStackTrace();
