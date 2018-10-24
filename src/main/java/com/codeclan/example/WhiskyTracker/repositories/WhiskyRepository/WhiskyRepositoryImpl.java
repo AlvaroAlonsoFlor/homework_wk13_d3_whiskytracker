@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public class WhiskyRepositoryImpl implements WhiskyRepositoryCustom {
-    //TODO: all whiskeys in a year
     //TODO: all the whisky in a region
     //TODO: all the whisky from a particular distillery that is a specific age
 
